@@ -248,6 +248,19 @@
         z-index: 3;
       }
     }
+
+        /* l’overlay non blocca il touch, lascia passare lo scroll */
+    .hero-overlay {
+      pointer-events: none;
+    }
+
+    /* su mobile disabilita il background-attachment fixed (spesso blocca lo scroll) */
+    @media (max-width: 768px) {
+      .hero {
+        background-attachment: scroll !important;
+      }
+    }
+
   </style>
 </head>
 <body>
