@@ -210,25 +210,38 @@
       margin: .5em 0 0 0;
     }
 
-    /* mobile nav */
-    @media (max-width:768px) {
-      .menu-toggle { display: block; }
-      .menu {
-        display: none;
-        position: absolute;
-        top: 144px; right: 0;
-        background: #151921;
-        flex-direction: column;
-        width: 200px;
-        padding: 10px 0;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.4);
-        border-radius: 0 0 8px 8px;
-      }
-      .menu.active { display: flex; }
-      .menu a { padding: 12px 20px; }
-    }
-  </style>
-</head>
+        /* mobile nav */
+        @media (max-width:768px) {
+          .menu-toggle { display: block; }
+          .menu {
+            display: none;
+            position: absolute;
+            top: 144px; right: 0;
+            background: #151921;
+            flex-direction: column;
+            width: 200px;
+            padding: 10px 0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+            border-radius: 0 0 8px 8px;
+          }
+          .menu.active { display: flex; }
+          .menu a { padding: 12px 20px; }
+        }
+
+        /* permette lo scroll sotto l’overlay del parallax */
+        .hero-overlay {
+          pointer-events: none;
+        }
+
+        /* su mobile disabilita il background-attachment fixed */
+        @media (max-width: 768px) {
+          .hero {
+            background-attachment: scroll !important;
+          }
+        }
+      </style>
+    </head>
+
 <body>
 
   <div class="glow-left"></div>
