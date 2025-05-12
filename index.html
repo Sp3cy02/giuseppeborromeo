@@ -35,7 +35,7 @@
       position: absolute; top:0; left:0;
       width:236px; height:236px;
       display:flex; align-items:center; justify-content:center;
-      padding-left:150px;
+      padding-left:100px;
     }
     .logo-glow {
       position:absolute; width:344px; height:121px;
@@ -227,40 +227,6 @@
       .menu.active { display: flex; }
       .menu a { padding: 12px 20px; }
     }
-
-    /* universal box-sizing */
-    *, *::before, *::after {
-      box-sizing: border-box;
-    }
-
-    /* mobile tweaks to avoid overlap */
-    @media (max-width:768px) {
-      .top-bar {
-        padding: 0 10px;
-      }
-      .logo-wrapper {
-        padding-left: 20px;
-      }
-      .menu-toggle {
-        margin-left: auto;
-        margin-right: 20px;
-        padding: 0 12px;
-        z-index: 3;
-      }
-    }
-
-        /* l’overlay non blocca il touch, lascia passare lo scroll */
-    .hero-overlay {
-      pointer-events: none;
-    }
-
-    /* su mobile disabilita il background-attachment fixed (spesso blocca lo scroll) */
-    @media (max-width: 768px) {
-      .hero {
-        background-attachment: scroll !important;
-      }
-    }
-
   </style>
 </head>
 <body>
