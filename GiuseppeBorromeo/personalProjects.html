@@ -1,0 +1,240 @@
+﻿<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Personal Projects - Lock Zone</title>
+  <style>
+    /* base */
+    html, body { margin:0; padding:0; background:#111318; color:#FFF; font-family:'Poppins',sans-serif; }
+    a { text-decoration:none; color:inherit; }
+    button { cursor:pointer; background:none; border:none; color:inherit; }
+
+    /* glow */
+    .glow-left, .glow-right {
+      position:fixed; bottom:0; width:400px; height:400px;
+      background:rgba(131,0,103,0.5); filter:blur(200px);
+      pointer-events:none; z-index:0;
+    }
+    .glow-left { left:-300px; bottom:-250px; }
+    .glow-right { right:-300px; bottom:-250px; }
+
+    /* navbar */
+    .top-bar { position:relative; display:flex; align-items:center;
+      background:#151921; height:144px; box-shadow:0 6px 15px rgba(0,0,0,0.49);
+      z-index:2;
+    }
+    .logo-wrapper { position:absolute; top:0; left:0; width:236px; height:236px;
+      display:flex; align-items:center; justify-content:center; padding-left:150px;
+    }
+    .logo { width:220px; height:220px; object-fit:contain; transform:translateY(-45px); }
+    .menu-toggle { display:none; font-size:1.8rem; margin-left:auto; padding:0 20px; color:#ccc; }
+    .menu { margin-left:auto; padding-right:150px; display:flex; gap:40px; align-items:center; }
+    .menu a:hover { text-decoration:underline; }
+
+    /* mobile nav */
+    @media(max-width:768px) {
+      .menu-toggle { display:block; }
+      .menu {
+        display:none; position:absolute; top:144px; right:0;
+        flex-direction:column; background:#151921; width:200px;
+        padding:10px 0; box-shadow:0 4px 10px rgba(0,0,0,0.4); border-radius:0 0 8px 8px;
+      }
+      .menu.active { display:flex; }
+      .menu a { padding:12px 20px; }
+    }
+
+    /* cards */
+    .uiux-design { padding:40px 20px; text-align:center; }
+    .uiux-design h2 { font-size:2rem; margin-bottom:60px; }
+    .uiux-cards {
+      display:flex; flex-wrap:wrap; gap:20px; justify-content:center;
+    }
+    .uiux-card {
+      position:relative;
+      width:300px; background:#151921; border-radius:25px;
+      overflow:hidden; box-shadow:0 0 20px rgba(0,0,0,0.25);
+      transition:transform .2s; padding-bottom:16px;
+    }
+    .uiux-card:hover { transform:translateY(-5px); }
+    .uiux-card img { width:100%; display:block; transform:translateY(+20px); }
+    .card-snippet {
+      padding:16px; color:#ccc; font-size:.9rem; line-height:1.4;
+      overflow-wrap:break-word; word-break:break-word;
+    }
+
+    /* timeline */
+    .timeline { max-width:600px; margin:40px auto; padding:0; list-style:none; }
+    .timeline li { position:relative; padding:10px 20px 10px 40px; }
+    .timeline li::before {
+      content:''; position:absolute; left:18px; top:10px;
+      width:8px; height:8px; background:#830067; border-radius:50%;
+    }
+    .timeline time { display:block; font-size:.8rem; color:#ccc; }
+    .timeline p { margin:4px 0 0; }
+
+    /* testimonials */
+    .testimonials { background:#151921; padding:40px 20px; text-align:center; }
+    .testimonials h2 { margin-bottom:20px; font-size:2rem; }
+    .testimonial {
+      max-width:600px; margin:0 auto 20px; font-style:italic; color:#ccc;
+    }
+
+    /* tech stack */
+    .tech-stack {
+      display:flex; justify-content:center; gap:20px; flex-wrap:wrap; padding:20px;
+    }
+    .tech-stack img {
+      width:40px; height:40px; filter:brightness(0) invert(1);
+    }
+
+    /* CTA */
+    .cta {
+      background:#830067; text-align:center; padding:40px 20px; margin-top:40px;
+    }
+    .cta h2 { margin-bottom:20px; font-size:2rem; }
+    .cta .btn {
+      padding:12px 24px; background:#fff; color:#151921;
+      border-radius:6px; font-weight:600; transition:background .2s;
+    }
+    .cta .btn:hover { background:#ddd; }
+
+    /* footer */
+    footer { background:#151921; text-align:center; padding:20px; }
+
+    /* fade-in for sections */
+    .fade-in {
+      opacity:0; transform:translateY(20px);
+      transition:opacity .6s ease-out, transform .6s ease-out;
+    }
+    .fade-in.visible {
+      opacity:1; transform:translateY(0);
+    }
+
+    /* modal */
+    .modal {
+      display:none; position:fixed; top:0; left:0;
+      width:100%; height:100%; background:rgba(0,0,0,0.7);
+      align-items:center; justify-content:center; z-index:10;
+    }
+    .modal.active { display:flex; }
+    .modal-content {
+      background:#151921; padding:20px; border-radius:12px;
+      max-width:400px; width:80%; text-align:center; position:relative;
+    }
+    .modal-close {
+      position:absolute; top:10px; right:10px;
+      background:none; border:none; font-size:24px; color:#fff; cursor:pointer;
+    }
+    .modal-body h3 { margin-top:0; font-size:1.5rem; }
+    .modal-body p { margin:.5em 0 0; color:#ccc; word-break:break-all; }
+  </style>
+</head>
+<body>
+
+  <div class="glow-left"></div>
+  <div class="glow-right"></div>
+
+  <!-- NAVBAR -->
+  <header>
+    <div class="top-bar">
+      <div class="logo-wrapper">
+        <a href="index.html"><img src="images/logo_lockzone.png" class="logo" alt="Logo"></a>
+      </div>
+      <button id="menu-toggle" class="menu-toggle">☰</button>
+      <nav class="menu">
+        <a href="#" id="contact-link">Contact me</a>
+        <a href="index.html#about">About Me</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- PROJECT CARDS -->
+  <section class="uiux-design">
+    <h2>I Miei Progetti</h2>
+    <div class="uiux-cards">
+      <div class="uiux-card">
+        <img src="images/habit.png" alt="Habit Tracker">
+        <p class="card-snippet">
+          <strong>Habit Tracker</strong> – Monitora le tue abitudini quotidiane e migliora la tua costanza.
+        </p>
+      </div>
+      <div class="uiux-card">
+        <img src="images/manshot.png" alt="Manshot">
+        <p class="card-snippet">
+          <strong>Manshot</strong> – Arena shooter mobile in sviluppo.
+        </p>
+      </div>
+      <!-- altre card… -->
+    </div>
+  </section>
+
+  <!-- TIMELINE -->
+  <ul class="timeline fade-in">
+    <li><time>September 2025</time><p>Sarà disponibile la prima versione di Habit Tracker</p></li>
+    <li><time>December 2025</time><p>Pubblicheremo la beta pubblica di Manshot</p></li>
+    <!-- altre voci… -->
+  </ul>
+
+  <!-- TECH STACK -->
+  <div class="tech-stack fade-in">
+    <img src="icons/figma.svg" alt="Figma">
+    <img src="icons/css.svg" alt="CSS">
+    <img src="icons/js.svg" alt="JavaScript">
+  </div>
+
+  <!-- CTA -->
+  <section class="cta fade-in">
+    <h2>Vuoi saperne di più?</h2>
+    <a href="#" id="contact-link-2" class="btn">Contattami</a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    © 2025 Giuseppe Borromeo
+  </footer>
+
+  <!-- CONTACT MODAL -->
+  <div id="contact-modal" class="modal">
+    <div class="modal-content">
+      <button class="modal-close">&times;</button>
+      <div class="modal-body">
+        <h3>Contattami</h3>
+        <p>giuseppeborromeo02@gmail.com</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // mobile menu toggle
+    document.getElementById('menu-toggle')
+      .addEventListener('click', () => document.querySelector('.menu').classList.toggle('active'));
+
+    // contact modal
+    ['contact-link','contact-link-2'].forEach(id => {
+      document.getElementById(id).addEventListener('click', e => {
+        e.preventDefault();
+        document.getElementById('contact-modal').classList.add('active');
+      });
+    });
+    document.querySelectorAll('#contact-modal .modal-close, #contact-modal')
+      .forEach(el => el.addEventListener('click', e => {
+        if (e.target.classList.contains('modal') || e.target.classList.contains('modal-close'))
+          document.getElementById('contact-modal').classList.remove('active');
+      }));
+
+    // scroll-reveal per timeline/testimonials/tech-stack/cta
+    document.querySelectorAll('.fade-in').forEach(el => {
+      const obs = new IntersectionObserver((entries, o) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('visible');
+            o.unobserve(e.target);
+          }
+        });
+      }, { threshold:0.1 });
+      obs.observe(el);
+    });
+  </script>
+</body>
+</html>
